@@ -115,6 +115,8 @@ class CSSPrimer
     end
 
     def process_options
+        @options.verbose = false if @options.quiet
+    
         raise RuntimeError, "no input markup file specified" if !File.exists?(@markup_file)
     end
   
