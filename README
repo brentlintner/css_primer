@@ -9,7 +9,14 @@ CSSPrimer takes in a markup file and generates a css file of all the extracted i
   ruby main.rb --in ../examples/test.xml --out some_styles.css
 
 == Dependencies
-  ParseConfig http://rubyforge.org/projects/parseconfig
+
+  Core Lib
+  - ostruct
+  - optparse
+  - fileutils
+  
+  Ruby Gems
+  - parseconfig http://rubyforge.org/projects/parseconfig
 
 == Unit Tests
   You need rspec http://rspec.info/
