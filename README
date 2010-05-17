@@ -1,0 +1,19 @@
+CSSPrimer takes in a markup file and generates a css file of all the extracted ids and classes.
+
+== Usage
+  For help use: gem css_primer -h (or view HELP)
+
+== Dependencies
+  ParseConfig http://rubyforge.org/projects/parseconfig
+
+== Unit Tests
+  You need rspec http://rspec.info/
+
+  cd tests/
+  rspec css_primer.rspec
+
+== Author
+  Copyright 2010 Brent Lintner
+
+  The MIT License
+  http://www.opensource.org/licenses/mit-license.php

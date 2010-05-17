@@ -1,0 +1,13 @@
+== CSS::Primer
+  Takes in a markup file (html/xml) and creates a CSS file with a reference to classes/ids.
+
+  == Usage
+  css_primer [options] --in FILE_TO_PRIME [--out] CSS_OUTPUT_FILE
+
+== Options
+  -h,   --help               Displays help message
+  -q,   --quiet              Output as little as possible, overrides verbose
+  -V,   --verbose            Verbose output
+  -i,   --in                 Markup file to parse
+  -o,   --out                CSS file to save out to (optional)
+
