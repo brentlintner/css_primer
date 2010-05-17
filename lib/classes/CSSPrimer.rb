@@ -84,7 +84,7 @@ class CSSPrimer
 
         opts = OptionParser.new
 
-        opts.on('-v', '--version')            { self.log("0.1") ; exit!(0) }
+        opts.on('-v', '--version')            { self.log("1.0") ; exit!(0) }
         opts.on('-h', '--help')               { self.log(self.read_in_file(self.config("HELP"))) ; exit!(0)  }
         opts.on('-V', '--verbose')            { @options.verbose = true }  
         opts.on('-q', '--quiet')              { @options.quiet = true }
