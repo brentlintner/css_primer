@@ -1,7 +1,12 @@
 CSSPrimer takes in a markup file and generates a css file of all the extracted ids and classes.
 
 == Usage
-  For help use: gem css_primer -h (or view HELP)
+  For help use: gem css_primer -h (also view HELP)
+
+== Using Examples
+  cd lib/
+  ruby main.rb --in ../examples/test.html
+  ruby main.rb --in ../examples/test.xml --out some_styles.css
 
 == Dependencies
   ParseConfig http://rubyforge.org/projects/parseconfig

@@ -1,7 +1,7 @@
 == CSS::Primer
   Takes in a markup file (html/xml) and creates a CSS file with a reference to classes/ids.
 
-  == Usage
+== Usage
   css_primer [options] --in FILE_TO_PRIME [--out] CSS_OUTPUT_FILE
 
 == Options
