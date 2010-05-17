@@ -12,12 +12,48 @@ require "../lib/classes/CSSPrimer"
 
 DEFAULT_CSS_FILE = "primed_styles.css"
 CUSTOM_CSS_FILE = "new_styles.css"
+MOCK_ARGV = []
+
+class GenericApplicationMock
+	include GenericApplication
+end
+
+describe GenericApplication, "#log" do
+
+	before(:each) do
+		@mock_generic_application = GenericApplicationMock.new
+	end
+	
+	it "logs something without dying" do
+		@mock_generic_application.log("~> hello")
+	end
+
+end
+
+describe GenericApplication, "#handle_exception" do
+
+	before(:each) do
+		@mock_generic_application = GenericApplicationMock.new
+	end
+
+	it "handles exception without raising an exception itself" do
+
+		mock_exception = OpenStruct.new
+		mock_exception.message = ""
+		mock_exception.exception = ""
+		mock_exception.backtrace = []
+	
+		@mock_generic_application.handle_exception(mock_exception, false)
+
+	end
+
+end
 
 describe CSSPrimer, "#initialize" do
 
 	it "should have default css file initialized" do
 	
-		primer = CSSPrimer.new(ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
 		primer.css_file.should == primer.config("DEFAULT_CSS_FILE_OUT")
 		
 	end
@@ -35,7 +71,7 @@ describe CSSPrimer, "#prime!" do
 	
 		begin
 		
-			primer = CSSPrimer.new(ARGV, STDIN)
+			primer = CSSPrimer.new(MOCK_ARGV, STDIN)
 			primer.prime!
 			
 		rescue CSSPrimer::MarkupFileError => e
@@ -46,7 +82,7 @@ describe CSSPrimer, "#prime!" do
 
 	it "should parse an html file (as only option specified)" do
 	
-		primer = CSSPrimer.new(ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
 		primer.markup_file = "../examples/test.html"
 		primer.prime!
 		
@@ -54,7 +90,7 @@ describe CSSPrimer, "#prime!" do
 
 	it "should parse an xml file (as only option specified)" do
 	
-		primer = CSSPrimer.new(ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
 		primer.markup_file = "../examples/test.xml"
 		primer.prime!
 		
@@ -62,7 +98,7 @@ describe CSSPrimer, "#prime!" do
 
 	it "should parse an xml file to custom css file" do
 	
-		primer = CSSPrimer.new(ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
 		primer.markup_file = "../examples/test.xml"
 		primer.css_file = CUSTOM_CSS_FILE
 		primer.prime!
