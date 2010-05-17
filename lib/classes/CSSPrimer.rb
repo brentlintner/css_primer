@@ -1,7 +1,5 @@
 #!/usr/bin/ruby
 
-# example cmd ==> ruby primer.rb HTMLFILE_LOCATION OPTIONAL_FILENAME
-
 class CSSPrimer
 
     include GenericApplication
@@ -82,7 +80,6 @@ class CSSPrimer
 
     protected
 
-    # parses command line options and does its thang
     def parsed_options?
 
         opts = OptionParser.new
