@@ -7,10 +7,11 @@ class CSSPrimer
     include GenericApplication
     include IOHelper
 
+    class MarkupFileError < RuntimeError ; end
+
     MAIN_CONFIG_FILE = '../conf/gem.conf'
 
-    attr_accessor :markup_file
-    attr_accessor :css_file
+    attr_accessor :markup_file, :css_file
 
     def initialize(argv, stdin)
 
@@ -117,7 +118,7 @@ class CSSPrimer
     def process_options
         @options.verbose = false if @options.quiet
     
-        raise RuntimeError, "no input markup file specified" if !File.exists?(@markup_file)
+        raise MarkupFileError, "No input markup file specified." if !File.exists?(@markup_file)
     end
   
 end

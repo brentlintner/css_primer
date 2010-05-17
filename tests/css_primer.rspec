@@ -31,6 +31,19 @@ describe CSSPrimer, "#prime!" do
 		File.delete(DEFAULT_CSS_FILE) if File.exists?(DEFAULT_CSS_FILE)
 	end
 
+	it "throws MarkupFileError if no markup file was specified" do
+	
+		begin
+		
+			primer = CSSPrimer.new(ARGV, STDIN)
+			primer.prime!
+			
+		rescue CSSPrimer::MarkupFileError => e
+			
+		end
+		
+	end
+
 	it "should parse an html file (as only option specified)" do
 	
 		primer = CSSPrimer.new(ARGV, STDIN)
@@ -54,7 +67,7 @@ describe CSSPrimer, "#prime!" do
 		primer.css_file = CUSTOM_CSS_FILE
 		primer.prime!
 
-		failure_message_for_should("#{CUSTOM_CSS_FILE} was not found!") if !File.exists?(CUSTOM_CSS_FILE) 
+		raise NoMethodError, "#{CUSTOM_CSS_FILE} was not found!" if !File.exists?(CUSTOM_CSS_FILE) 
 		
 	end
 
