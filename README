@@ -1,17 +1,13 @@
 CSSPrimer takes in a markup file and generates a css file of all the extracted ids and classes.
 
-This is a repo for using css_primer as a gem, redcar plugin or just the terminal.
-
 == Terminal usage
   As a ruby gem:
     css_primer -h
   
   Or you can just:
-    cd lib
-    ruby terminal.rb -h
+    ruby bin/css_primer -h
 
 == Using Examples
-  cd lib/
     ruby main.rb --in ../examples/test.html
     ruby main.rb --in ../examples/test.xml --out some_styles.css
 
@@ -24,8 +20,7 @@ This is a repo for using css_primer as a gem, redcar plugin or just the terminal
 == Tests
   You need rspec http://rspec.info/
 
-  cd tests/
-  rspec css_primer.rspec
+  spec tests/css_primer.rspec
 
 == Author
   Copyright 2010 Brent Lintner

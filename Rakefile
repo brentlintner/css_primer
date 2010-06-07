@@ -1,7 +1,7 @@
 require 'rubygems'
 
 manifest = Rake::FileList.new("**/*")
-manifest.exclude("tags", "plugin.rb", "redcar/*", "tests/*", "examples/*", "lib/terminal.rb")
+manifest.exclude("tags", "plugin.rb", "redcar/*", "tests/*", "examples/*")
 
 gemspec = Gem::Specification.new do |s|
 
@@ -22,7 +22,7 @@ gemspec = Gem::Specification.new do |s|
     s.has_rdoc         = true
     s.extra_rdoc_files = %w( README )
     s.rdoc_options.concat ['--main',  'README']
-    
+
     s.executables = ["css_primer"]
     s.require_path = "lib"
 

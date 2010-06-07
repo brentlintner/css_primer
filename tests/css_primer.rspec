@@ -1,14 +1,16 @@
+LIB = File.join(File.dirname(__FILE__), %w(.. lib))
+$:.unshift(LIB) if File.exists?(LIB) unless $:.member?(LIB)
 
-require 'rubygems'
+EXAMPLES = File.join(File.dirname(__FILE__), %w(.. examples))
+$:.unshift(EXAMPLES) if File.exists?(EXAMPLES) unless $:.member?(EXAMPLES)
 
-require 'optparse' 
+require 'optparse'
 require 'ostruct'
-require 'parseconfig'
 require 'fileutils'
 
-require "../lib/modules/GenericApplication"
-require "../lib/modules/IOHelper"
-require "../lib/classes/CSSPrimer"
+require "#{LIB}/modules/GenericApplication"
+require "#{LIB}/modules/IOHelper"
+require "#{LIB}/classes/CSSPrimer"
 
 DEFAULT_CSS_FILE = "primed_styles.css"
 CUSTOM_CSS_FILE = "new_styles.css"
@@ -74,8 +76,8 @@ describe CSSPrimer, "#prime!" do
 			primer = CSSPrimer.new(MOCK_ARGV)
 			primer.prime!
 			
-		rescue CSSPrimer::MarkupFileError => e
-			
+        rescue CSSPrimer::MarkupFileError => e
+            #self.handle_exception(e)
 		end
 		
 	end
@@ -83,7 +85,7 @@ describe CSSPrimer, "#prime!" do
 	it "should parse an html file (as only option specified)" do
 	
 		primer = CSSPrimer.new(MOCK_ARGV)
-		primer.markup_file = "../examples/test.html"
+		primer.markup_file = "#{EXAMPLES}/test.html"
 		primer.prime!
 		
 	end
@@ -91,7 +93,7 @@ describe CSSPrimer, "#prime!" do
 	it "should parse an xml file (as only option specified)" do
 	
 		primer = CSSPrimer.new(MOCK_ARGV)
-		primer.markup_file = "../examples/test.xml"
+		primer.markup_file = "#{EXAMPLES}/test.xml"
 		primer.prime!
 		
 	end
@@ -99,7 +101,7 @@ describe CSSPrimer, "#prime!" do
 	it "should parse an xml file to custom css file" do
 	
 		primer = CSSPrimer.new(MOCK_ARGV)
-		primer.markup_file = "../examples/test.xml"
+		primer.markup_file = "#{EXAMPLES}/test.xml"
 		primer.css_file = CUSTOM_CSS_FILE
 		primer.prime!
 

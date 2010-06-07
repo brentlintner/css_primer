@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../files/modules/IOHelper_rb.html">
-                modules/IOHelper.rb
+                <a href="../files/lib/modules/IOHelper_rb.html">
+                lib/modules/IOHelper.rb
                 </a>
         <br />
             </td>
@@ -121,9 +121,9 @@
             onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000012-source">
 <pre>
-    <span class="ruby-comment cmt"># File modules/IOHelper.rb, line 33</span>
+    <span class="ruby-comment cmt"># File lib/modules/IOHelper.rb, line 33</span>
 33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">append</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">file_to_append</span>)
-34:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file_to_append</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+34:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file_to_append</span>, <span class="ruby-value str">&quot;a&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
 35:             <span class="ruby-identifier">file</span>.<span class="ruby-identifier">syswrite</span> <span class="ruby-identifier">lines</span>
 36:         <span class="ruby-keyword kw">end</span>
 37:     <span class="ruby-keyword kw">end</span>
@@ -146,7 +146,7 @@
             onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000008-source">
 <pre>
-    <span class="ruby-comment cmt"># File modules/IOHelper.rb, line 15</span>
+    <span class="ruby-comment cmt"># File lib/modules/IOHelper.rb, line 15</span>
 15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_full_dir</span>(<span class="ruby-identifier">orig</span>, <span class="ruby-identifier">target</span>)
 16:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp_r</span>(<span class="ruby-identifier">orig</span>, <span class="ruby-identifier">target</span>)
 17:     <span class="ruby-keyword kw">end</span>
@@ -169,7 +169,7 @@
             onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000009-source">
 <pre>
-    <span class="ruby-comment cmt"># File modules/IOHelper.rb, line 19</span>
+    <span class="ruby-comment cmt"># File lib/modules/IOHelper.rb, line 19</span>
 19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_full_dir</span>(<span class="ruby-identifier">directory</span>)
 20:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_r</span>(<span class="ruby-identifier">directory</span>)
 21:     <span class="ruby-keyword kw">end</span>
@@ -192,7 +192,7 @@
             onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000010-source">
 <pre>
-    <span class="ruby-comment cmt"># File modules/IOHelper.rb, line 23</span>
+    <span class="ruby-comment cmt"># File lib/modules/IOHelper.rb, line 23</span>
 23:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_full_dir_contents</span>(<span class="ruby-identifier">directory</span>)
 24:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_r</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-node">&quot;#{directory}*&quot;</span>))
 25:     <span class="ruby-keyword kw">end</span>
@@ -215,7 +215,7 @@
             onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000007-source">
 <pre>
-    <span class="ruby-comment cmt"># File modules/IOHelper.rb, line 3</span>
+    <span class="ruby-comment cmt"># File lib/modules/IOHelper.rb, line 3</span>
  3:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_in_file</span>(<span class="ruby-identifier">full_path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
  4:         <span class="ruby-identifier">data</span> = <span class="ruby-value str">&quot;&quot;</span>
  5: 
@@ -246,7 +246,7 @@
             onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000011-source">
 <pre>
-    <span class="ruby-comment cmt"># File modules/IOHelper.rb, line 27</span>
+    <span class="ruby-comment cmt"># File lib/modules/IOHelper.rb, line 27</span>
 27:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">file_to_write</span>)
 28:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file_to_write</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
 29:             <span class="ruby-identifier">file</span>.<span class="ruby-identifier">syswrite</span> <span class="ruby-identifier">lines</span>

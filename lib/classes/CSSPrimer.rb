@@ -22,9 +22,7 @@ class CSSPrimer
     include GenericApplication
     include IOHelper
 
-    class MarkupFileError < RuntimeError ; end
-
-    MAIN_CONFIG_FILE = '../conf/gem.conf'
+    class MarkupFileError < StandardError ; end
 
     attr_accessor :markup_file, :css_file
 
@@ -101,7 +99,7 @@ class CSSPrimer
 
     def generate_docs
         begin
-            Kernel.exec "rdoc1.8 -U -S -N -o '../rdoc' --main CSSPrimer"
+            Kernel.exec "rdoc1.8 -U -S -N -o 'rdoc' --main CSSPrimer"
         rescue Exception => e
             self.handle_exception(e)
         ensure
@@ -144,7 +142,7 @@ class CSSPrimer
 
     def process_options
         @options.verbose = false if @options.quiet
-    
+
         raise MarkupFileError, "No input markup file specified." if !File.exists?(@markup_file)
     end
   
