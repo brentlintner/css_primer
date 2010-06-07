@@ -31,7 +31,7 @@ module IOHelper
     end
 
     def append(lines, file_to_append)
-        File.open(file_to_append, "w") do |file|
+        File.open(file_to_append, "a") do |file|
             file.syswrite lines
         end
     end

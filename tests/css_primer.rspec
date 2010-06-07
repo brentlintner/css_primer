@@ -53,7 +53,7 @@ describe CSSPrimer, "#initialize" do
 
 	it "should have default css file initialized" do
 	
-		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV)
 		primer.css_file.should == primer.config("DEFAULT_CSS_FILE_OUT")
 		
 	end
@@ -71,7 +71,7 @@ describe CSSPrimer, "#prime!" do
 	
 		begin
 		
-			primer = CSSPrimer.new(MOCK_ARGV, STDIN)
+			primer = CSSPrimer.new(MOCK_ARGV)
 			primer.prime!
 			
 		rescue CSSPrimer::MarkupFileError => e
@@ -82,7 +82,7 @@ describe CSSPrimer, "#prime!" do
 
 	it "should parse an html file (as only option specified)" do
 	
-		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV)
 		primer.markup_file = "../examples/test.html"
 		primer.prime!
 		
@@ -90,7 +90,7 @@ describe CSSPrimer, "#prime!" do
 
 	it "should parse an xml file (as only option specified)" do
 	
-		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV)
 		primer.markup_file = "../examples/test.xml"
 		primer.prime!
 		
@@ -98,7 +98,7 @@ describe CSSPrimer, "#prime!" do
 
 	it "should parse an xml file to custom css file" do
 	
-		primer = CSSPrimer.new(MOCK_ARGV, STDIN)
+		primer = CSSPrimer.new(MOCK_ARGV)
 		primer.markup_file = "../examples/test.xml"
 		primer.css_file = CUSTOM_CSS_FILE
 		primer.prime!

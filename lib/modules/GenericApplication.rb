@@ -4,7 +4,7 @@ module GenericApplication
         puts msg.to_s
     end
 
-	def handle_exception(e, verbose)
+	def handle_exception(e, verbose=false)
 		msg = e.message
 
 		msg = e.exception.to_s+" :: "+msg if e.message.to_s != e.exception.to_s

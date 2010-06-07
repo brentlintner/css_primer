@@ -1,5 +1,22 @@
 #!/usr/bin/ruby
 
+HELP = <<TEXT
+
+== CSS::Primer
+  Takes in a markup file (html/xml) and creates a CSS file with a reference to classes/ids.
+
+== Usage
+  css_primer [options] --in FILE_TO_PRIME [--out] CSS_OUTPUT_FILE
+
+== Options
+  -h,   --help               Displays help message
+  -q,   --quiet              Output as little as possible, overrides verbose
+  -V,   --verbose            Verbose output
+  -i,   --in                 Markup file to parse
+  -o,   --out                CSS file to save out to (optional)
+
+TEXT
+
 class CSSPrimer
 
     include GenericApplication
@@ -11,12 +28,14 @@ class CSSPrimer
 
     attr_accessor :markup_file, :css_file
 
-    def initialize(argv, stdin)
+    def initialize(argv)
 
-        @config = ParseConfig.new(MAIN_CONFIG_FILE)
+        @config = OpenStruct.new
+        @config.HELP = HELP
+
+        @config.DEFAULT_CSS_FILE_OUT = "primed_styles.css"
 
         @argv = argv
-        @stdin = stdin
 
         @options = OpenStruct.new
         @options.verbose = false
@@ -29,8 +48,8 @@ class CSSPrimer
 
     end
     
-    def config(index)
-        @config.params[index]
+    def config(struct)
+        @config.send(struct)
     end
     
     def prime!
@@ -41,21 +60,21 @@ class CSSPrimer
 
                 self.log("what up! lets do some priming\nopening up #{@markup_file}\n") if @options.verbose
 
-                buffer, val, css_type = "", "", ""
+                buffer = ""
 
                 # TODO: clean up
                 self.read_in_file(@markup_file).scan(/(id="\S+"|class="\S+")/) do |w|
 
-                    w[0].scan(/"\S+"/) do |val|
+                    w[0].scan(/"\S+"/) do |rule_attribute|
                     
                         css_type = (w[0] =~ /^id=/) ? "#" : "."
 
-                        val.gsub!(/"/,"")
+                        rule_attribute.gsub!(/"/,"")
 
                         if css_type == "#"
-                            @my_ids.push [val, css_type]
+                            @my_ids.push [rule_attribute, css_type]
                         else
-                            @my_classes.push [val, css_type]
+                            @my_classes.push [rule_attribute, css_type]
                         end
 
                     end
@@ -80,15 +99,26 @@ class CSSPrimer
 
     protected
 
+    def generate_docs
+        begin
+            Kernel.exec "rdoc1.8 -U -S -N -o '../rdoc' --main CSSPrimer"
+        rescue Exception => e
+            self.handle_exception(e)
+        ensure
+            Kernel.exit!
+        end
+    end
+
     def parsed_options?
 
         opts = OptionParser.new
 
         opts.on('-v', '--version')            { self.log("0.1") ; exit!(0) }
-        opts.on('-h', '--help')               { self.log(self.read_in_file(self.config("HELP"))) ; exit!(0)  }
+        opts.on('-h', '--help')               { self.log(self.config("HELP")) ; exit!(0)  }
         opts.on('-V', '--verbose')            { @options.verbose = true }  
         opts.on('-q', '--quiet')              { @options.quiet = true }
-        
+        opts.on('-r', '--rdoc')               { self.generate_docs }
+
         opts.on('-i', '--in MARKUPFILE') do |markup_file|
             @markup_file = markup_file
         end

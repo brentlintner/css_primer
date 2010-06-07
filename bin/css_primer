@@ -1,0 +1,14 @@
+#!/usr/bin/ruby
+lib = File.join(File.dirname(__FILE__), %w(.. lib))
+$:.unshift(lib) if File.exists?(lib) unless $:.member?(lib)
+
+require 'optparse'
+require 'ostruct'
+require 'fileutils'
+
+require "#{lib}/modules/GenericApplication"
+require "#{lib}/modules/IOHelper"
+require "#{lib}/classes/CSSPrimer"
+
+CSSPrimer.new(ARGV).prime!
+

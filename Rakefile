@@ -1,4 +1,9 @@
-Gem::Specification.new do |s|
+require 'rubygems'
+
+manifest = Rake::FileList.new("**/*")
+manifest.exclude("tags", "plugin.rb", "redcar/*", "tests/*", "examples/*", "lib/terminal.rb")
+
+gemspec = Gem::Specification.new do |s|
 
     s.platform = Gem::Platform::RUBY
     s.name = 'css_primer'
@@ -12,17 +17,21 @@ Gem::Specification.new do |s|
     s.email = 'brent.lintner@gmail.com'
     s.homepage = 'http://github.com/brentlintner/css_primer'
 
-    s.files = Dir['bind/*', 'css_primer.gemspec', 'CHANGELOG', 'README', 'lib/classes/*', 'lib/modules/*'].to_a
+    s.files = manifest.to_a
 
     s.has_rdoc         = true
     s.extra_rdoc_files = %w( README )
     s.rdoc_options.concat ['--main',  'README']
-
+    
     s.executables = ["css_primer"]
     s.require_path = "lib"
-    
+
 end
 
+desc "Build gem"
 
+task :default => [:build]
 
-
+task :build do
+    Gem::Builder.new(gemspec).build
+end
