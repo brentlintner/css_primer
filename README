@@ -10,8 +10,8 @@ http://rubygems.org/gems/css_primer
     ruby bin/css_primer -h
 
 == Using Examples
-    ruby main.rb --in ../examples/test.html
-    ruby main.rb --in ../examples/test.xml --out some_styles.css
+  ruby main.rb --in ../examples/test.html
+  ruby main.rb --in ../examples/test.xml --out some_styles.css
 
 == Dependencies
   Core Lib
@@ -24,13 +24,8 @@ http://rubygems.org/gems/css_primer
 
   spec tests/css_primer.rspec
 
-== Gem Packaging
-
-* With RubyGems
-    gem build css_primer.gemspec
-
-* Or Rake
-    rake build
+== Packaging
+  gem build css_primer.gemspec
 
 == Author
   Copyright 2010 Brent Lintner
