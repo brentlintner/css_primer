@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
     s.email = 'brent.lintner@gmail.com'
     s.homepage = 'http://github.com/brentlintner/css_primer'
 
-    s.files = Dir['bind/*', 'css_primer.gemspec', 'CHANGELOG', 'README', 'lib/classes/*', 'lib/modules/*'].to_a
+    s.files = Dir['bin/*', 'css_primer.gemspec', 'CHANGELOG', 'README', 'lib/classes/*', 'lib/modules/*'].to_a
 
     s.has_rdoc         = true
     s.extra_rdoc_files = %w( README )
