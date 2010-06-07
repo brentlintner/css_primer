@@ -1,5 +1,7 @@
 CSSPrimer takes in a markup file and generates a css file of all the extracted ids and classes.
 
+http://rubygems.org/gems/css_primer
+
 == Terminal usage
   As a ruby gem:
     css_primer -h
