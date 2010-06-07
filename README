@@ -24,6 +24,14 @@ http://rubygems.org/gems/css_primer
 
   spec tests/css_primer.rspec
 
+== Gem Packaging
+
+* With RubyGems
+    gem build css_primer.gemspec
+
+* Or Rake
+    rake build
+
 == Author
   Copyright 2010 Brent Lintner
 
