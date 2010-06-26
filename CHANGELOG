@@ -4,6 +4,6 @@ June 26, 2010 - v0.2
   - Added --sort command (by default writes in order)
   - Reads in directories recursively (ex css_primer --in /tests)
 
-May 17, 2010 - v0.1
+June 7, 2010 - v0.1
 
-  - initial release
+  - initial release, basic parsing
