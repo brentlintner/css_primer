@@ -3,147 +3,183 @@
 HELP = <<TEXT
 
 == CSS::Primer
-  Takes in a markup file (html/xml) and creates a CSS file with a reference to classes/ids.
+Takes in a markup file (html/xml) and creates a CSS file with a reference to classes/ids.
 
 == Usage
-  css_primer [options] --in FILE_TO_PRIME [--out] CSS_OUTPUT_FILE
+css_primer [options] --in FILE_TO_PRIME [--out] CSS_OUTPUT_FILE
 
 == Options
-  -h,   --help               Displays help message
-  -q,   --quiet              Output as little as possible, overrides verbose
-  -V,   --verbose            Verbose output
-  -i,   --in                 Markup file to parse
-  -o,   --out                CSS file to save out to (optional)
+-h,   --help               Displays help message
+-q,   --quiet              Output as little as possible, overrides verbose
+-V,   --verbose            Verbose output
+-i,   --in                 Markup file to parse
+-o,   --out                (optional) CSS file to save out to
+-s,   --sort               (optional) Sorts ids/classes alphabetically when set else by the order of parsing
 
 TEXT
 
 class CSSPrimer
 
-    include GenericApplication
-    include IOHelper
+  include GenericApplication
+  include IOHelper
 
-    class MarkupFileError < StandardError ; end
+  class MarkupFileError < StandardError ; end
 
-    attr_accessor :markup_file, :css_file
+  attr_accessor :markup_file, :css_file
 
-    def initialize(argv)
+  def initialize(argv)
 
-        @config = OpenStruct.new
-        @config.HELP = HELP
+    @config = OpenStruct.new
+    @config.HELP = HELP
 
-        @config.DEFAULT_CSS_FILE_OUT = "primed_styles.css"
+    @config.DEFAULT_CSS_FILE_OUT = "primed_styles.css"
 
-        @argv = argv
+    @argv = argv
 
-        @options = OpenStruct.new
-        @options.verbose = false
-        @options.quiet = false
+    @options = OpenStruct.new
+    @options.verbose = false
+    @options.quiet = false
+    @options.sort = false
 
-        @my_ids, @my_classes = [], []
+    @attributes = []
 
-        @markup_file = ""
-        @css_file = self.config("DEFAULT_CSS_FILE_OUT")
+    @markup_file = ""
+    @css_file = self.config("DEFAULT_CSS_FILE_OUT")
 
-    end
-    
-    def config(struct)
-        @config.send(struct)
-    end
-    
-    def prime!
+  end
 
-        if self.parsed_options?
+  def config(struct)
+    @config.send(struct)
+  end
 
-            begin
+  def prime!
 
-                self.log("what up! lets do some priming\nopening up #{@markup_file}\n") if @options.verbose
+    if self.parsed_options?
 
-                buffer = ""
+      begin
 
-                # TODO: clean up
-                self.read_in_file(@markup_file).scan(/(id="\S+"|class="\S+")/) do |w|
+        self.log("Time to pwn...\n")
 
-                    w[0].scan(/"\S+"/) do |rule_attribute|
-                    
-                        css_type = (w[0] =~ /^id=/) ? "#" : "."
+        # TODO: clean up regex, not tight enough (i.e. will match against inner text and javascript strings if present)
+        parser = Proc.new { |full_path|
 
-                        rule_attribute.gsub!(/"/,"")
+          self.log("\nOpening up #{full_path}\n") if @options.verbose
 
-                        if css_type == "#"
-                            @my_ids.push [rule_attribute, css_type]
-                        else
-                            @my_classes.push [rule_attribute, css_type]
-                        end
+          self.read_in_file(full_path) do |line|
 
-                    end
-                    
-                end
-
-                @my_ids.uniq.sort.concat(@my_classes.uniq.sort).each do |arr|
-                    buffer += "#{arr[1]}#{arr[0]}{\n\n}\n\n"
-                end
-
-                self.save(buffer, @css_file)
-
-                puts "saved to #{@css_file}\n\nLet's Roll!" if @options.verbose
-
-            rescue Exception => e  
-                self.handle_exception(e)
+            line.scan(/class="((\s|\w|\-)*)"/) do |class_attribute|
+              class_attribute[0].split(" ").each do |class_name|
+                @attributes << [class_name, "."]
+                self.log("Found class => #{class_name}") if @options.verbose
+              end
             end
 
-        end
-        
-    end
+            line.scan(/id="((\w|\-)*)"/) do |id_attribute|
+              @attributes << [id_attribute[0], "#"]
+              self.log("Found id => #{id_attribute[0]}") if @options.verbose
+            end
 
-    protected
+          end
 
-    def generate_docs
-        begin
-            Kernel.exec "rdoc1.8 -U -S -N -o 'rdoc' --main CSSPrimer"
-        rescue Exception => e
-            self.handle_exception(e)
-        ensure
-            Kernel.exit!
-        end
-    end
+        }
 
-    def parsed_options?
-
-        opts = OptionParser.new
-
-        opts.on('-v', '--version')            { self.log("0.1") ; exit!(0) }
-        opts.on('-h', '--help')               { self.log(self.config("HELP")) ; exit!(0)  }
-        opts.on('-V', '--verbose')            { @options.verbose = true }  
-        opts.on('-q', '--quiet')              { @options.quiet = true }
-        opts.on('-r', '--rdoc')               { self.generate_docs }
-
-        opts.on('-i', '--in MARKUPFILE') do |markup_file|
-            @markup_file = markup_file
-        end
-        
-        opts.on('-o', '--out [CSSFILE]') do |css_file|
-            @css_file = css_file
+        if File.directory?(@markup_file)
+          self.recurse_directories(@markup_file) do |full_path|
+            parser.call(full_path) if full_path =~ /\.(html|xml)$/
+          end
+        else
+          parser.call(@markup_file)
         end
 
-        begin
+        # TODO: do win or *nix line breaks
+        buffer_array = @attributes.uniq
+        buffer_array.sort! if @options.sort
 
-            opts.parse!(@argv)
+        self.save("", @css_file)
 
-        rescue Exception => e  
-            self.handle_exception(e)
-            exit!(0)
+        buffer_array.each do |item|
+          self.append("#{item[1]}#{item[0]} {\n\n}\n\n", @css_file)
         end
 
-        self.process_options
+        puts "\nSaved to #{@css_file}\n\nLet's Roll!"
 
-        true
+      rescue Exception => e
+        self.handle_exception(e)
+      end
 
     end
 
-    def process_options
-        @options.verbose = false if @options.quiet
+  end
 
-        raise MarkupFileError, "No input markup file specified." if !File.exists?(@markup_file)
+  protected
+
+  def generate_docs
+    begin
+      Kernel.exec "rdoc1.8 -U -S -N -o 'rdoc' --main CSSPrimer"
+    rescue Exception => e
+      self.handle_exception(e)
+    ensure
+      Kernel.exit!(0)
     end
-  
+  end
+
+  def parsed_options?
+
+    opts = OptionParser.new
+
+    opts.on('-v', '--version')            { self.log("0.1") ; exit!(0) }
+    opts.on('-h', '--help')               { self.log(self.config("HELP")) ; exit!(0)  }
+    opts.on('-V', '--verbose')            { @options.verbose = true }
+    opts.on('-q', '--quiet')              { @options.quiet = true }
+    opts.on('-r', '--rdoc')               { self.generate_docs }
+    opts.on('-s', '--sort')               { @options.sort = true }
+
+    opts.on('-i', '--in MARKUPFILE') do |markup_file|
+      @markup_file = markup_file
+    end
+
+    opts.on('-o', '--out [CSSFILE]') do |css_file|
+      @css_file = css_file
+    end
+
+    begin
+
+      opts.parse!(@argv)
+
+    rescue Exception => e
+      self.handle_exception(e)
+      exit!(0)
+    end
+
+    self.process_options
+
+    true
+
+  end
+
+  def process_options
+    @options.verbose = false if @options.quiet
+    raise MarkupFileError, "No input markup file specified." if !File.exists?(@markup_file)
+  end
+
+  def recurse_directories(directory, limit=10, &block)
+
+    raise StandardError, "You should use a block eh!" if !block_given?
+    raise StandardError, "Recursive limit reached!" if limit <= 0
+
+    Dir.foreach(directory) do |directory_item|
+      full_path = "#{directory}/#{directory_item}"
+
+      if directory_item != "." && directory_item != ".."
+        if File.directory?(full_path)
+          self.log("\nNavigating into #{full_path}") if @options.verbose          
+          recurse_directories(full_path, limit - 1, &block)
+        else
+          yield(full_path)
+        end
+      end
+    end
+
+  end
+
 end

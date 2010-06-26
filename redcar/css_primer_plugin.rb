@@ -9,9 +9,9 @@ require "../lib/modules/IOHelper"
 require "../lib/classes/CSSPrimer"
 
 module Redcar
-    class CSSPrimer
-        def initialize
-            @argv = []
-        end
+  class CSSPrimer
+    def initialize
+      @argv = []
     end
+  end
 end

@@ -24,8 +24,8 @@ http://rubygems.org/gems/css_primer
 
   spec tests/css_primer.rspec
 
-== Packaging
-  gem build css_primer.gemspec
+== Bugs
+  - classes/ids on the same line are randomly sorted in when writing rules in order
 
 == Author
   Copyright 2010 Brent Lintner
