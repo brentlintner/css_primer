@@ -6,11 +6,8 @@ $:.unshift(EXAMPLES_DIRECTORY) if File.exists?(EXAMPLES_DIRECTORY) unless $:.mem
 
 require 'optparse'
 require 'ostruct'
-require 'fileutils'
 
-require "#{LIB_DIRECTORY}/modules/GenericApplication"
-require "#{LIB_DIRECTORY}/modules/IOHelper"
-require "#{LIB_DIRECTORY}/classes/CSSPrimer"
+require "#{LIB_DIRECTORY}/css_primer"
 
 DEFAULT_CSS_FILE = "primed_styles.css"
 CUSTOM_CSS_FILE = "new_styles.css"
@@ -18,18 +15,18 @@ MOCK_ARGV = []
 
 # TODO: make less high level.
 
-class GenericApplicationMock
-  include GenericApplication
-end
+describe CSSPrimer, "#log" do
 
-describe GenericApplication, "#log" do
-
-  before(:each) do
-    @mock_generic_application = GenericApplicationMock.new
+  it "responds to log" do
+    raise StandardError, "no log method found on CSSPrimer" if !CSSPrimer.new(MOCK_ARGV).respond_to?(:log)
   end
 
-  it "logs something without dying" do
-    @mock_generic_application.log("~> hello")
+end
+
+describe CSSPrimer, "#handle_exception" do
+
+  it "responds to handle_exception" do
+    raise StandardError, "no handle_exception method found on CSSPrimer" if !CSSPrimer.new(MOCK_ARGV).respond_to?(:handle_exception)
   end
 
 end
@@ -39,7 +36,7 @@ describe CSSPrimer, "#initialize" do
   it "should have default css file initialized" do
 
     primer = CSSPrimer.new(MOCK_ARGV)
-    primer.css_file.should == primer.config("DEFAULT_CSS_FILE_OUT")
+    primer.css_file.should == "primed_styles.css"
 
   end
 

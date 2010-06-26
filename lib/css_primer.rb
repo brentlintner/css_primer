@@ -20,9 +20,6 @@ TEXT
 
 class CSSPrimer
 
-  include GenericApplication
-  include IOHelper
-
   class MarkupFileError < StandardError ; end
 
   attr_accessor :markup_file, :css_file
@@ -31,7 +28,6 @@ class CSSPrimer
 
     @config = OpenStruct.new
     @config.HELP = HELP
-
     @config.DEFAULT_CSS_FILE_OUT = "primed_styles.css"
 
     @argv = argv
@@ -46,10 +42,6 @@ class CSSPrimer
     @markup_file = ""
     @css_file = self.config("DEFAULT_CSS_FILE_OUT")
 
-  end
-
-  def config(struct)
-    @config.send(struct)
   end
 
   def prime!
@@ -112,6 +104,10 @@ class CSSPrimer
   end
 
   protected
+
+  def config(struct)
+    @config.send(struct)
+  end
 
   def generate_docs
     begin
@@ -180,6 +176,45 @@ class CSSPrimer
       end
     end
 
+  end
+
+
+  # helpers
+  def log(msg)
+    puts msg.to_s
+  end
+
+  def handle_exception(e)
+    msg = e.message
+
+    msg = e.exception.to_s+" :: "+msg if e.message.to_s != e.exception.to_s
+
+    self.log "\nHANDLED EXCEPTION --> #{e.class.to_s}\n\nMESSAGE --> #{msg}"
+    self.log "\nBACKTRACE\n\n#{e.backtrace.join("\n")}\n\n"
+  end
+
+  def read_in_file(full_path, &block)
+    data = ""
+
+    if !File.directory?(full_path)
+      IO.foreach full_path do |line|
+        data += block_given? ? yield(line) : line
+      end
+    end
+
+    data
+  end
+
+  def save(lines, file_to_write)
+    File.open(file_to_write, "w") do |file|
+      file.syswrite lines
+    end
+  end
+
+  def append(lines, file_to_append)
+    File.open(file_to_append, "a") do |file|
+      file.syswrite lines
+    end
   end
 
 end
