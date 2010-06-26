@@ -12,6 +12,7 @@ http://rubygems.org/gems/css_primer
 == Using Examples
   ruby bin/css_primer --in examples/test.html
   ruby bin/css_primer --in examples/test.xml --out some_styles.css
+  ruby bin/css_primer --in examples/
 
 == Dependencies
   Core Lib
@@ -21,7 +22,6 @@ http://rubygems.org/gems/css_primer
 
 == Tests
   You need rspec http://rspec.info/
-
   spec tests/css_primer.rspec
 
 == Bugs

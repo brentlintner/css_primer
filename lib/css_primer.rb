@@ -12,8 +12,8 @@ css_primer [options] --in FILE_TO_PRIME [--out] CSS_OUTPUT_FILE
 -h,   --help               Displays help message
 -q,   --quiet              Output as little as possible, overrides verbose
 -V,   --verbose            Verbose output
--i,   --in                 Markup file to parse
--o,   --out                (optional) CSS file to save out to
+-i,   --in                 file or directory to parse
+-o,   --out                (optional) CSS file  to save out to
 -s,   --sort               (optional) Sorts ids/classes alphabetically when set else by the order of parsing
 
 TEXT
