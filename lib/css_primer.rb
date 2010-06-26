@@ -87,11 +87,7 @@ class CSSPrimer
         buffer_array = @attributes.uniq
         buffer_array.sort! if @options.sort
 
-        self.save("", @css_file)
-
-        buffer_array.each do |item|
-          self.append("#{item[1]}#{item[0]} {\n\n}\n\n", @css_file)
-        end
+        self.save(buffer_array.inject("") { |buffer, item| buffer << "#{item[1]}#{item[0]} {\n\n}\n\n" }, @css_file)
 
         puts "\nSaved to #{@css_file}\n\nLet's Roll!"
 
