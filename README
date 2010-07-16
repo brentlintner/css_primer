@@ -1,4 +1,4 @@
-CSSPrimer takes in a markup file and generates a css file of all the extracted ids and classes.
+CSSPrimer takes in a markup file or recusively checks a folder for any. It then generates a css file with all the extracted ids and classes.
 
 http://rubygems.org/gems/css_primer
 
