@@ -1,33 +1,44 @@
-CSSPrimer takes in a markup file or recusively checks a folder for any. It then generates a css file with all the extracted ids and classes.
+== CSSPrimer
+
+{<img src="https://badge.fury.io/rb/machinator.svg" alt="Gem Version" />}[http://badge.fury.io/rb/machinator]
+
+CSSPrimer takes in a markup file or recusively checks a folder for any.
+It then generates a css file with all the extracted ids and classes.
 
 http://rubygems.org/gems/css_primer
 
 == Terminal usage
+
   As a ruby gem:
     css_primer -h
-  
+
   Or you can just:
     ruby bin/css_primer -h
 
 == Using Examples
+
   ruby bin/css_primer --in examples/test.html
   ruby bin/css_primer --in examples/test.xml --out some_styles.css
   ruby bin/css_primer --in examples/
 
 == Dependencies
+
   Core Lib
   - ostruct
   - optparse
   - fileutils
 
 == Tests
+
   You need rspec http://rspec.info/
   spec tests/css_primer.rspec
 
 == Bugs
+
   - classes/ids on the same line are randomly sorted in when writing rules in order
 
 == Author
+
   Copyright 2010 Brent Lintner
 
   The MIT License
